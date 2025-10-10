@@ -28,9 +28,10 @@ app.get('/', (req, res) => {
 
 // Define the /add-todo route
 app.post('/add-todo', (req, res) => {
-    const title = req.body;
+    const { title } = req.body;
     console.log('Title:', title);
-    res.status(200).json({ message: 'Todo added successfully!' });
+    // Here you can save the todo to DB using your Todo model...
+    res.status(200).json({ message: 'Todo added successfully!', todo: { title } });
 });
 
 // Connect to the database

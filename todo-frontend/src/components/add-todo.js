@@ -7,7 +7,7 @@ const AddTodo = () => {
         e.preventDefault();
         console.log("Form submitted : ", todo);
         try {
-            const response = await fetch('http://localhost:3000/add-todo' , {
+            const response = await fetch('http://localhost:3005/add-todo' , {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -15,8 +15,7 @@ const AddTodo = () => {
                 body: JSON.stringify({title: todo})
             })
             const data = await response.json()
-            console.log("Response from server: ", data
-            )
+            console.log("Response from server: ", data)
         } 
         catch (error) {
             console.error("Error adding todo: ", error)
