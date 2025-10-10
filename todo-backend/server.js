@@ -26,13 +26,36 @@ app.get('/', (req, res) => {
     res.status(200).json({ message: 'Welcome to the Todo App API!' });
 });
 
+app.get("/add-todo", async(req, res) => {
+    console.log("Fetching all todos from the DB");
+    try {
+        const todos = await Todo.find();
+        console.log("Fetched todos from the DB", todos);
+        res.status(200).json(todos);
+    } catch (error) {
+        console.error("Error while fetching todos:", error);
+        res.status(500).json({ error: "Error fetching todos" });
+    }
+})
+
 // Define the /add-todo route
-app.post('/add-todo', (req, res) => {
-    const { title } = req.body;
-    console.log('Title:', title);
-    // Here you can save the todo to DB using your Todo model...
-    res.status(200).json({ message: 'Todo added successfully!', todo: { title } });
+app.post("/add-todo", async (req, res) => {
+    const { title } = req.body; // Correct destructuring
+
+    console.log("Adding a new todo", title);
+    const newTodo = new Todo({ title });
+
+    try {
+        console.log("Adding the todo to DB", newTodo);
+        const savedTodo = await newTodo.save();
+        console.log("Added the todo to DB", savedTodo);
+        res.status(200).json(savedTodo);
+    } catch (error) {
+        console.error("Error saving todo:", error);
+        res.status(500).json({ error: "Error saving todo" });
+    }
 });
+
 
 // Connect to the database
 connectDB();
