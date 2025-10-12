@@ -1,7 +1,9 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+const connectDB = require('./db');
+dotenv.config();
 
 const app = express();
 app.use(cors());
@@ -9,17 +11,6 @@ app.use(bodyParser.json());
 app.use(express.json());
 
 const Todo = require('./models/todoModel');
-
-// Connect to MongoDB
-const connectDB = async () => {
-    try {
-        await mongoose.connect('mongodb+srv://manojct764_db_user:devops@todo-db-cluster.hthbjoq.mongodb.net/?retryWrites=true&w=majority&appName=Todo-DB-Cluster');
-        console.log('Connected to MongoDB');
-    } catch (error) {
-        console.error('Error connecting to MongoDB:', error);
-        // process.exit(1);
-    }
-};
 
 // Define the root route
 app.get('/', (req, res) => {
