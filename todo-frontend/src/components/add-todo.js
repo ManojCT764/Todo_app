@@ -1,4 +1,5 @@
 import React , {useState} from "react"
+import { BACKEND_URL } from "../config";
 
 const AddTodo = () => {
     const [todo, setTodo] = useState("")
@@ -7,7 +8,7 @@ const AddTodo = () => {
         e.preventDefault();
         console.log("Form submitted : ", todo);
         try {
-            const response = await fetch('http://localhost:3005/api/add-todo' , {
+            const response = await fetch(`${BACKEND_URL}/api/add-todo`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -22,13 +23,14 @@ const AddTodo = () => {
         }
     }
     return (
-        <div>
+        <div className="todo-container">
             <h3>Add New Todo</h3>
             <form onSubmit={handleSubmit}>
                 <input type="text" 
                 value={todo} 
                 placeholder="Enter todo"
                 onChange={(e) => setTodo(e.target.value)} 
+                required
                 />
                 <button type="submit">Add Todo</button>
             </form>
