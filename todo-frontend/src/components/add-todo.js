@@ -7,7 +7,7 @@ const AddTodo = () => {
         e.preventDefault();
         console.log("Form submitted : ", todo);
         try {
-            const response = await fetch('http://localhost:3005/add-todo' , {
+            const response = await fetch('http://localhost:3005/api/add-todo' , {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

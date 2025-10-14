@@ -1,30 +1,31 @@
 const Todo = require('../models/todoModel')
+const logger = require('../Utils/logger')
 
 exports.getTodos = async(req, res) => {
-    console.log("Fetching all todos from the DB");
+    logger.info("Fetching all todos from the DB");
     try {
         const todos = await Todo.find();
-        console.log("Fetched todos from the DB", todos);
+        logger.info(`Fetched todos from the DB ${JSON.stringify(todos)}`);
         res.status(200).json(todos);
     } catch (error) {
-        console.error("Error while fetching todos:", error);
-        res.status(500).json({ error: "Error fetching todos" });
+        logger.error("Error while fetching todos:", error);
+        res.status(500).json({ message: "something went wrong, please try later" });
     }
 }
 
 exports.addTodo = async (req, res) => {
     const { title } = req.body; // Correct destructuring
 
-    console.log("Adding a new todo", title);
+    logger.info("Adding a new todo", title);
     const newTodo = new Todo({ title });
 
     try {
-        console.log("Adding the todo to DB", newTodo);
+        logger.info("Adding the todo to DB", newTodo);
         const savedTodo = await newTodo.save();
-        console.log("Added the todo to DB", savedTodo);
+        logger.info("Added the todo to DB", savedTodo);
         res.status(200).json(savedTodo);
     } catch (error) {
-        console.error("Error saving todo:", error);
+        logger.error("Error saving todo:", error);
         res.status(500).json({ error: "Error saving todo" });
     }
 }
